@@ -1,0 +1,16 @@
+---
+title: "README"
+author: "Keh-Harng Feng"
+date: "February 14, 2017"
+output: 
+    html_document:
+        keep_md: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Course Project Script run_analysis.R
+
+This document serves as the README file for the Data Cleaning course project script run_analysis.R.
