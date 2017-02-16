@@ -6,8 +6,11 @@ February 14, 2017
 
 ## Goal
 
-The script merges the test and training sets from the original UCI HAR dataset together then reorganizes them into a tidy dataset. 
-Specifically, a tidy data is one that satisfies the following three conditions:
+The script merges the test and training sets from the original UCI HAR dataset 
+together then reorganizes them into a tidy dataset that contains averages of 
+each measured variable categorized by the subject and activity. 
+
+A tidy data is one that satisfies the following three conditions:
 
 1. Each variable forms a column.
 
@@ -18,7 +21,8 @@ Specifically, a tidy data is one that satisfies the following three conditions:
 as defined by Hadley Wickham [1].
 
 ## List of Extracted Variables
-Per the instruction, only the mean and std values are listed and subsequently processed. Also, the dataset is split into a training and testing set. Hence, 
+Per the instruction, only the mean and std values are listed and subsequently 
+processed. Also, the dataset is split into a training and testing set. Hence, 
 every variable identified below is chosen without loss of generality from the 
 training set. They are duplicated exactly once in the test set. With this in 
 mind, identified variables from the original data to be processed are:
@@ -73,20 +77,46 @@ These are found in /train/X_train.txt
 ## [65] "542 fBodyBodyGyroJerkMag-mean()" "543 fBodyBodyGyroJerkMag-std()"
 ```
 
-## Methodology
+## Data Preprocessing
 
-All measured variables from X_train.txt are extracted using read.table() with white space as the separator. Full column names are read from features.txt and assigned accordingly to this data frame. The columns corresponding to desired variables (ie: mean and std) are then copied to a new data frame by matching the column names to the list of measured variables above. The fixed variable "Subject" can be directly read using readLines() into a column matching subject to each measurement with no issue. However the descripitive activity labels must be matched using activity pointers.  This is done by first assigning activity pointers to the measurements with cbind then transforming the numerical pointers to a factor variable with levels matching the corresponding activity labels.
+Using the training set as an example, run_analysis first checks the existence of 
+the dataset and download the data if necessary using check_data(). It then 
+extracts column names from features.txt and activity labels from activity_labels.txt. 
+These are passed to set_preprocess() for data preprocessing.
+
+In set_preprocess(), all measured variables from X_train.txt are extracted using 
+read.table() with white space as the separator. Column names obtained from before 
+are added to the data frame and activity pointers read from y_train.txt are 
+matched to activity labels and transformed into a factor. This factor is then 
+column-bound to the data frame. The columns corresponding to desired variables 
+(ie: mean and std) are then copied to a new data frame by matching the column 
+names to the list of measured variables above. The fixed variable "subject" can 
+be directly read from subject_train.txt using readLines() into a column matching
+each measurement with no issue. An additional fixed factor variable 'origin' is 
+created to indicate the origin of the data, in this case the training set.
 
 An identical process is carried out for the Test set.
 
 ### Data Merging
 
-Prior to merging a new fixed factor variable named 'origin' is inserted for both Test and Training in order to identify the origin of the measurements. The factor levels are simply set to 'test' and 'train'.
-
-Test set and Training set are merged() by matching subjects with all = TRUE. This is because each subject can only participate for either Test or Training set but never both. The expectation is therefore to find no match whatsoever. With all set to TRUE all extracted variables will be merged without losing any measurements.
+Test set and Training set are merged using rbind(). This is because each subject 
+can only participate in either Test or Training set but never both. rbind() 
+allows us to take advantage of automatic column name matching and simply append 
+the measurements to the end.
 
 ## Variable Names & Order
 
-Variable names are formatted to contain only lower alphanumerical letters with no space. Fixed variables are placed from left to right with 'origin' being the first, followed by 'subject' and finally 'activity'. Measured variables follow with their original order and the whole data set is sorted using the three fixed variables with the corresponding priority. This is consistent with Hadley Wickham's protocol of creating tidy data [1]. The content of the reorganized dataset is detailed in the [CODEBOOK](./CODEBOOK.md).
+Fixed variables are placed from left to right with 'origin' being the 
+first, followed by 'subject' and finally 'activity'. Measured variables follow 
+with their original order and the whole data set is sorted using the three fixed 
+variables with the corresponding priority. Variable names are formatted to contain 
+only lower alphanumerical letters with no space. Note that although it is not 
+required for the merged data to be in tidy form it in fact is already tidy. 
+
+## Computation of Average and Creation of Tidy Data
+
+TBF
+
+The content of the tidy data is detailed in the [CODEBOOK](./CODEBOOK.md).
 
 [1]: http://vita.had.co.nz/papers/tidy-data.pdf

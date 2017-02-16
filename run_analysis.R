@@ -102,3 +102,11 @@ formatted_names <- gsub('\\(\\)', '',
                    sapply(strsplit(names(merged_data), ' '), function(x) x[2]))))
 
 names(merged_data)[4:ncols] <- formatted_names[4:ncols]
+
+# Compute average of each variable based on subject and activity and create tidy 
+# data
+#tidy_set <- aggregate(merged_data, 
+#                      by = list(merged_data$origin, merged_data$subject, 
+#                                merged_data$activity), mean)
+
+#write.table(tidy_set, file = 'tidy_set.txt', row.names = FALSE)
