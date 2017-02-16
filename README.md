@@ -29,12 +29,11 @@ mind, identified variables from the original data to be processed are:
 
 ### Fixed Variables:
 
-Subject (from /train/subject_train.txt): subject for the each measurement
+subject (from /train/subject_train.txt): subject for the each measurement
 
-Activity Labels (from /activity_labels.txt): descriptive labels of the activity
-
-Activity Pointers (from /train/y_train.txt): numerical activity label matched to 
-each measurement
+activity pointers (from /train/y_train.txt): numerical activity label matched to 
+each measurement.  These should eventually be labled with descriptions from 
+/activity_labels.txt
 
 ### Measured Variables:
 
