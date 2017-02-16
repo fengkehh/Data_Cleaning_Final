@@ -114,7 +114,7 @@ using aggregate(), with activity, subject and origin being the grouping factors.
 Fixed variables are placed from left to right with 'activity' being the 
 first, followed by 'subject' and finally 'origin'. Average of measured 
 variables follow with their original order. Variable names are formatted to contain 
-only lower alphanumerical letters with no space. 
+only lower alphabetic letters with no space. 
 
 The content of the tidy data is detailed in the [CODEBOOK](./CODEBOOK.md).
 
