@@ -92,21 +92,19 @@ merged_data <- rbind(test, train)
 # Order columns and format names.
 ncols <- length(names(merged_data))
 
-merged_data <- merged_data[c(ncols:(ncols-2), 1:(ncols-3))]
-
-merged_data <- merged_data[order(merged_data[1], merged_data[2], merged_data[3]),]
-
 formatted_names <- gsub('\\(\\)', '', 
               gsub('-', '', 
                tolower(
                    sapply(strsplit(names(merged_data), ' '), function(x) x[2]))))
 
-names(merged_data)[4:ncols] <- formatted_names[4:ncols]
+names(merged_data)[1:(ncols-3)] <- formatted_names[1:(ncols-3)]
 
 # Compute average of each variable based on subject and activity and create tidy 
 # data
-#tidy_set <- aggregate(merged_data, 
-#                      by = list(merged_data$origin, merged_data$subject, 
-#                                merged_data$activity), mean)
+tidy_set <- aggregate(merged_data[1:(ncols-3)], 
+                      by = list(merged_data$activity, merged_data$subject, 
+                                merged_data$origin), mean)
 
-#write.table(tidy_set, file = 'tidy_set.txt', row.names = FALSE)
+names(tidy_set)[1:3] <- c('activity', 'subject', 'origin')
+
+write.table(tidy_set, file = 'tidy_set.txt', row.names = FALSE)

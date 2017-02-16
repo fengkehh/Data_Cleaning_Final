@@ -104,18 +104,18 @@ can only participate in either Test or Training set but never both. rbind()
 allows us to take advantage of automatic column name matching and simply append 
 the measurements to the end.
 
-## Variable Names & Order
-
-Fixed variables are placed from left to right with 'origin' being the 
-first, followed by 'subject' and finally 'activity'. Measured variables follow 
-with their original order and the whole data set is sorted using the three fixed 
-variables with the corresponding priority. Variable names are formatted to contain 
-only lower alphanumerical letters with no space. Note that although it is not 
-required for the merged data to be in tidy form it in fact is already tidy. 
-
 ## Computation of Average and Creation of Tidy Data
 
-TBF
+The merged data is already in a form that is almost tidy (besides column order).
+Thus variable averages categorized by subject and activity can be easily computed
+using aggregate(), with activity, subject and origin being the grouping factors.
+
+### Variable Names & Order
+
+Fixed variables are placed from left to right with 'activity' being the 
+first, followed by 'subject' and finally 'origin'. Average of measured 
+variables follow with their original order. Variable names are formatted to contain 
+only lower alphanumerical letters with no space. 
 
 The content of the tidy data is detailed in the [CODEBOOK](./CODEBOOK.md).
 
